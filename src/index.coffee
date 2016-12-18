@@ -94,8 +94,9 @@ module.exports = (layoutPattern, outputPattern, contextEnum, globalsEnum, option
         'newerThan'
         'force'
         'verbose'
-    _.extend renderingOptions, 
-        output: outputTemplate or no
+    renderingOptions.output = outputTemplate or no
+    if renderingOptions.engine
+        renderingOptions.engineTemplate = new PathExp renderingOptions.engine
 
     renderer = (context, callback) -> render layoutTemplate, context, renderingOptions, callback
     # unfortunately, parallel rendering leads to too much filesystem

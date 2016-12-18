@@ -39,7 +39,10 @@ logRender = (destination, extra..., callback) ->
 module.exports = (layoutTemplate, context, options, callback) ->
     layout = layoutTemplate.fill context
     extension = (fs.path.extname layout)[1..]
-    language = options.engine or extension
+    language = if options.engineTemplate
+        options.engineTemplate.fill context
+    else
+        options.engine or extension
     renderingEngine = engines[language]
 
     unless renderingEngine
