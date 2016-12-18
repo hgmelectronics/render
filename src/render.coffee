@@ -14,6 +14,7 @@ fs.path.isDirectory = utils.isDirectory
 
 
 engines = _.pickBy consolidate, (value, key) -> value.render?
+engines['copy'] = (file, options, cb) -> fs.readFile file, cb
 engineNames = _.keys engines
 engineList = engineNames.join ', '
 
@@ -26,7 +27,8 @@ writeHTML = (path, html, callback) ->
     async.series [mkdir, write], callback
 
 printHTML = (html, callback) ->
-    console.log html
+    process.stdout.write html
+    process.stdout.write '\n'
     utils.next callback
 
 logRender = (destination, extra..., callback) ->
