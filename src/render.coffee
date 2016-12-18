@@ -31,10 +31,17 @@ logRender = (destination, extra..., callback) ->
     if typeof callback is 'function'
         utils.next callback
 
-module.exports = (layoutTemplate, context, options, callback) ->
-    layout = layoutTemplate.fill context
-    extension = (fs.path.extname layout)[1..]
-    language = options.engine or extension
+module.exports = (layoutTemplate, layoutSource, context, options, callback) ->
+    if layoutTemplate
+        layout = layoutTemplate.fill context
+        extension = (fs.path.extname layout)[1..]
+        language = options.engine or extension
+    else
+        language = options.engine
+        if not language
+            throw new Error unwrap \
+            "Must specify the --engine option when reading
+            the template from a string or from stdin."
     renderingEngine = engines[language]
 
     unless renderingEngine
@@ -73,7 +80,7 @@ module.exports = (layoutTemplate, context, options, callback) ->
     else
         output = printHTML
 
-    if options.output and options.newerThan and not options.force
+    if options.output and options.newerThan and not options.force and layout
         try
             if options.newerThan.constructor is Date
                 contextModified = options.newerThan               
@@ -94,6 +101,9 @@ module.exports = (layoutTemplate, context, options, callback) ->
     else
         log = utils.passthrough
 
-    render = _.partial renderingEngine, layout, context
+    if layout
+        render = _.partial renderingEngine, layout, context
+    else
+        render = _.partial renderingEngine.render, layoutSource, context
     async.waterfall [render, output, log], (err) ->
         callback err, 'rendered'

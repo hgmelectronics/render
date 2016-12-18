@@ -1,4 +1,5 @@
-fs = path: require 'path'
+fs = require 'fs'
+fs.path = require 'path'
 program = require 'commander'
 colors = require 'colors'
 _ = require 'underscore'
@@ -47,7 +48,10 @@ program
 context = program.context
 globals = (_.compact [program.globals, program.defaults]).join ','
 
-layoutPattern = program.args[0]
+if program.args.length
+    layoutPattern = program.args[0]
+else
+    layoutSource = fs.readFileSync 0, 'utf8'
 outputPattern = program.output
 
 options = _.pick program, 
@@ -71,4 +75,7 @@ _.extend options,
 warn = (err) ->
     if err then console.log err.toString().red
 
-render layoutPattern, outputPattern, context, globals, options, warn
+if layoutPattern
+    render layoutPattern, outputPattern, context, globals, options, warn
+else
+    render.renderString layoutSource, outputPattern, context, globals, options, warn

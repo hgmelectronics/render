@@ -25,6 +25,12 @@ describe = (timing, counts) ->
         took #{duration.toString().bold} seconds in total."
 
 module.exports = (layoutPattern, outputPattern, contextEnum, globalsEnum, options, callback) ->
+    renderAll layoutPattern, null, outputPattern, contextEnum, globalsEnum, options, callback
+
+module.exports.renderString = (layoutSource, outputPattern, contextEnum, globalsEnum, options, callback) ->
+    renderAll null, layoutSource, outputPattern, contextEnum, globalsEnum, options, callback
+
+renderAll = (layoutPattern, layoutSource, outputPattern, contextEnum, globalsEnum, options, callback) ->
     timing.start = new Date()
     
     _.defaults options, 
@@ -32,7 +38,8 @@ module.exports = (layoutPattern, outputPattern, contextEnum, globalsEnum, option
 
     contexts = context.load contextEnum
     globals  = context.load globalsEnum
-    layoutTemplate = new PathExp layoutPattern
+    if layoutPattern
+        layoutTemplate = new PathExp layoutPattern
     if outputPattern
         outputTemplate = new PathExp outputPattern
         outputPlaceholders = _.pluck outputTemplate.placeholders, 'name'
@@ -89,7 +96,7 @@ module.exports = (layoutPattern, outputPattern, contextEnum, globalsEnum, option
     _.extend renderingOptions, 
         output: outputTemplate or no
 
-    renderer = _.partial render, layoutTemplate, _, renderingOptions
+    renderer = _.partial render, layoutTemplate, layoutSource, _, renderingOptions
     # unfortunately, parallel rendering leads to too much filesystem
     # contention to be of any use; it represents maybe a 2-3% 
     # performance gain; instead we've chosen to render serially
