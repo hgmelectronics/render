@@ -1,6 +1,10 @@
-# Render
+# @cspotcode/render-cli
 
-[![Build Status](https://travis-ci.org/debrouwere/render.svg)](https://travis-ci.org/debrouwere/render)
+[![Build Status](https://travis-ci.org/cspotcode/render.svg)](https://travis-ci.org/cspotcode/render)
+
+*This is a fork of [render-cli](http://npmjs.com/package/render-cli) to allow using newer or specific versions of rendering engines.  For example, the original can't render pug templates because it declares locked dependencies on "consolidate" and all supported rendering engines.*
+
+---
 
 Render is an advanced command-line interface that renders text or HTML from [Jade](http://jade-lang.com/) templates, [Handlebars](http://handlebarsjs.com/) templates, [Swig](http://paularmstrong.github.io/swig/) templates and pretty much [any other kind of templates](https://github.com/visionmedia/consolidate.js#supported-template-engines) you can think of.
 
@@ -9,7 +13,13 @@ Use it to generate your static site, to fill out code skeletons, to populate con
 Install with [NPM](https://www.npmjs.org/) (bundled with [node.js](http://nodejs.org/)): 
 
 ```shell
-npm install render-cli -g
+npm install @cspotcode/render-cli -g
+```
+
+You must also install all the rendering engines you intend to use. For example, to render pug and swig templates:
+
+```shell
+npm install pug swig -g
 ```
 
 Render comes with an [ISC license](http://en.wikipedia.org/wiki/ISC_license).

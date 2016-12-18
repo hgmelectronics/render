@@ -1,5 +1,5 @@
 {
-  "name": "render-cli",
+  "name": "@cspotcode/render-cli",
   "version": "0.3.1",
   "description": "Render HTML from Jade, Handlebars, Swig and most other kinds of templates on the command line. Uses the consolidate.js template engine consolidation library for all heavy lifting.",
   "main": "lib/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/debrouwere/render"
+    "url": "git://github.com/cspotcode/render"
   },
   "keywords": [
     "templating",
@@ -27,9 +27,9 @@
   }, 
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/debrouwere/render/issues"
+    "url": "https://github.com/cspotcode/render/issues"
   },
-  "homepage": "https://github.com/debrouwere/render",
+  "homepage": "https://github.com/cspotcode/render",
   "dependencies": {
     "async": "1.x",
     "underscore": "1.8.x",
