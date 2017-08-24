@@ -1,8 +1,6 @@
-# @cspotcode/render-cli
+# @hgmelectronics/render-cli
 
-[![Build Status](https://travis-ci.org/cspotcode/render.svg)](https://travis-ci.org/cspotcode/render)
-
-*This is a fork of [render-cli](http://npmjs.com/package/render-cli) to allow using newer or specific versions of rendering engines.  For example, the original can't render pug templates because it declares locked dependencies on "consolidate" and all supported rendering engines.*
+*This is a fork of [render-cli](http://npmjs.com/package/render-cli) to fix bugs and make for easier use with multiple files and make(1).
 
 ---
 
@@ -33,18 +31,19 @@ Render comes with an [ISC license](http://en.wikipedia.org/wiki/ISC_license).
 
 ### Context variables
 
-Pass context variables to your templates with `--context <file>...` for dynamic rendering. Context can be YAML or JSON.
+Pass context variables to your templates with one or more `--context <file>` for dynamic rendering. Context can be YAML or JSON.
 
 ```sh
 # no context
 render page.jade
 # context from a single file
 render page.jade \
-    --context page.json
+    --conext page.json
 # context from multiple files which will be 
 # merged (if objects) or appended (if arrays)
 render page.jade \
-    --context globals.json,page.json
+    --context globals.json 
+    --context page.json
 # specify globals separately (for clarity)
 render page.jade \
     --context page.json \
@@ -129,7 +128,8 @@ Explicit namespaces: put `globals.json` in a `globals` key rather than at the ro
 
 ```sh
 render page.jade \
-    --context globals:globals.json,page.json
+    --context globals:globals.json
+    --context page.json
 ```
 
 ```json
@@ -148,7 +148,8 @@ Automatic namespaces: inside of the context object, `globals.json` data will be 
 
 ```sh
 render page.jade \
-    --context globals.json,page.json
+    --context globals.json
+    --context page.json
     --namespaced
 ```
 
@@ -167,7 +168,8 @@ Automatic namespaces using the full path: `helpers/globals.json` will be accessi
 
 ```sh
 render page.jade \
-    --context helpers/globals.json,page.json
+    --context helpers/globals.json
+    --context page.json
     --fully-namespaced
 ```
 
@@ -188,7 +190,8 @@ Explicit namespaces take preference over automatic ones, so these globals will b
 
 ```sh
 render page.jade \
-    --context globals:helpers/globals.json,page.json
+    --context globals:helpers/globals.json
+    --context page.json
     --fully-namespaced
 ```
 

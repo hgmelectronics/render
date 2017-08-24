@@ -13,7 +13,7 @@ utils = require './utils'
 
 
 parsePaths = (paths=[], options={}) ->
-    for path in _.compact paths.split(',')
+    for path in _.compact paths
         segments = path.split ':'
         filename = segments.pop()
         namespace = segments.pop()

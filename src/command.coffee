@@ -7,11 +7,15 @@ _ =
     extend: require 'lodash.assignin'
 render = require './'
 
+collect = (val, memo) ->
+  memo.push(val)
+  memo
+
 program
     .version require('../package').version
     .usage '<template> [options]'
     .option '-c --context <path>', 
-        'Input files that serve as context to your template.', ''
+        'Input files that serve as context to your template.  Use multiple times for multiple files', collect, []
     .option '-g --globals <path>', 
         'Data that will be added to each context set.', ''
     .option '-d --defaults <path>',
@@ -48,7 +52,7 @@ program
 
 
 context = program.context
-globals = (_.compact [program.globals, program.defaults]).join ','
+globals = _.compact [program.globals, program.defaults]
 
 layoutPattern = program.args[0]
 outputPattern = program.output
