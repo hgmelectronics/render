@@ -40,7 +40,7 @@ Pass context variables to your templates with `--context <file>...` for dynamic 
 render page.jade
 # context from a single file
 render page.jade \
-    --input page.json
+    --context page.json
 # context from multiple files which will be 
 # merged (if objects) or appended (if arrays)
 render page.jade \
@@ -119,7 +119,7 @@ Namespaces come in three flavors:
 
 Type      | Description               | Flag
 ----------|---------------------------|--------------------------------
-explicit  | you pick the namespace    | --input (namespace):(filename)
+explicit  | you pick the namespace    | --context (namespace):(filename)
 automatic | the basename of the file  | --namespaced
 automatic | the full path to the file | --fully-namespaced
 
@@ -148,7 +148,7 @@ Automatic namespaces: inside of the context object, `globals.json` data will be 
 
 ```sh
 render page.jade \
-    --input globals.json,page.json
+    --context globals.json,page.json
     --namespaced
 ```
 

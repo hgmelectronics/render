@@ -38,7 +38,7 @@ module.exports = (layoutPattern, outputPattern, contextEnum, globalsEnum, option
     _.defaults options, 
         key: 'items'
 
-    contexts = context.load contextEnum
+    contexts = context.load contextEnum, options
     globals  = context.load globalsEnum
     layoutTemplate = new PathExp layoutPattern
     if outputPattern
